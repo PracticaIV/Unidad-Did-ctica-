@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuaderno de Datos - 4to Grado</title>
+    <style>
+        /* Estilos generales */
+        body { 
+            font-family: 'Comic Sans MS', 'Verdana', sans-serif; 
+            background-color: #e0f7fa; 
+            color: #333; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        h1 { color: #00838f; text-align: center; font-size: 2.5em; text-shadow: 2px 2px 0px #fff; }
+        h2 { border-bottom: 3px dashed; padding-bottom: 5px; }
+        
+        .container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+            position: relative;
+        }
+
+        /* Sistema de Páginas */
+        .page { display: none; animation: fadeIn 0.5s; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .section { margin-bottom: 30px; padding: 20px; border-radius: 15px; }
+
+        /* Colores por actividad */
+        .tema-dulces { border: 3px solid #81d4fa; background-color: #e1f5fe; }
+        .tema-dulces h2 { color: #0277bd; border-color: #29b6f6; }
+        
+        .tema-mascotas { border: 3px solid #ce93d8; background-color: #f3e5f5; }
+        .tema-mascotas h2 { color: #6a1b9a; border-color: #ab47bc; }
+
+        /* Diccionario de conceptos */
+        .diccionario {
+            background-color: #fff9c4;
+            border-left: 5px solid #fbc02d;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        /* Navegación */
+        .nav-buttons {
+            display: flex; justify-content: space-between; margin-top: 20px;
+            border-top: 2px solid #eee; padding-top: 20px;
+        }
+        .btn-nav {
+            background-color: #ff9800; color: white; font-size: 1.2em;
+            padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn-nav:hover { background-color: #f57c00; transform: scale(1.05); }
+        .btn-nav:disabled { background-color: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+        .page-indicator { font-size: 1.2em; font-weight: bold; color: #555; display: flex; align-items: center; }
+
+        /* Caja de dulces desordenados */
+        .caja-dulces {
+            position: relative; width: 100%; height: 250px; background-color: #ffcc80;
+            border: 4px solid #ef6c00; border-radius: 15px; margin-bottom: 20px;
+            overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+        .dulce-suelto { position: absolute; font-size: 2em; user-select: none; }
+
+        /* Tablas */
+        table { width: 80%; margin: 15px auto; border-collapse: collapse; text-align: center; font-size: 1.2em; background: white; }
+        th, td { border: 2px solid #bbb; padding: 10px; }
+        .th-dulces { background-color: #b3e5fc; color: #01579b; }
+        .th-mascotas { background-color: #e1bee7; color: #4a148c; }
+        input[type="number"] { width: 60px; padding: 8px; font-size: 1.1em; border: 2px solid #00bcd4; border-radius: 8px; text-align: center; }
+
+        /* Constructor de Gráfica */
+        .chart-area {
+            display: flex; justify-content: space-around; align-items: flex-end;
+            height: 300px; background-image: repeating-linear-gradient(to bottom, #fff, #fff 19px, #e0e0e0 20px);
+            border: 2px solid #ccc; border-radius: 5px; padding: 0 20px; margin-bottom: 20px;
+        }
+        .bar-group { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 80px; }
+        .bar {
+            width: 60px; height: 0px; transition: height 0.3s ease; border-radius: 5px 5px 0 0;
+            display: flex; align-items: flex-start; justify-content: center; color: white; font-weight: bold; font-size: 1.2em; padding-top: 5px; box-sizing: border-box;
+        }
+
+        /* Colores Barras */
+        #bar-caramelo { background-color: #ec407a; } #bar-chupeta { background-color: #ab47bc; } #bar-chocolate { background-color: #8d6e63; }
+        #bar-perro { background-color: #42a5f5; } #bar-gato { background-color: #ff9800; } #bar-pajaro { background-color: #66bb6a; }
+
+        .controls { margin-top: 10px; display: flex; gap: 5px; }
+        .btn-control { width: 35px; height: 35px; font-size: 1.5em; font-weight: bold; background-color: #eeeeee; border: 2px solid #ccc; border-radius: 5px; cursor: pointer; }
+        .btn-control:hover { background-color: #e0e0e0; }
+        .icon-label { font-size: 1.5em; margin-top: 5px; }
+
+        /* Botones Acción */
+        .btn-accion { background-color: #4caf50; color: white; font-size: 1.1em; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; display: block; margin: 15px auto; }
+        .btn-accion:hover { background-color: #388e3c; }
+
+        /* Feedback y Quiz */
+        .feedback { text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 15px; padding: 10px; border-radius: 10px; display: none;}
+        .correct { background-color: #c8e6c9; color: #2e7d32; border: 2px solid #4caf50; display: block;}
+        .incorrect { background-color: #ffcdd2; color: #c62828; border: 2px solid #f44336; display: block;}
+        
+        .quiz-question { margin-bottom: 20px; font-size: 1.2em; }
+        .quiz-option { margin: 10px 0; font-size: 1.1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Mi Cuaderno de Datos 🕵️‍♀️</h1>
+
+        <!-- ================= PÁGINA 1: INTRODUCCIÓN ================= -->
+        <div id="pagina1" class="page active">
+            <div class="section" style="text-align: center; background-color: #fff9c4; border: 3px solid #fbc02d;">
+                <h2 style="color: #f57f17; border-bottom: none;">¡Bienvenido, Científico de Datos!</h2>
+                <p style="font-size: 1.3em;">Hoy vamos a completar dos misiones muy importantes para aprender a recolectar datos, organizarlos en tablas y dibujar gráficas de barras.</p>
+                <div style="font-size: 4em; margin: 20px 0;">🎒 🐶 🍬</div>
+                <p style="font-size: 1.2em;">Haz clic en <strong>"Siguiente"</strong> para comenzar tu primera misión.</p>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 2: LAS MASCOTAS (AHORA ES LA MISIÓN 1) ================= -->
+        <div id="pagina2" class="page">
+            <div class="section tema-mascotas">
+                <h2>Misión 1: Mascotas Favoritas 🐾</h2>
+                <p>Aquí ya te damos los datos recolectados en la encuesta del salón. Obsérvalos bien:</p>
+                <table>
+                    <tr><th class="th-mascotas">Mascota</th><th class="th-mascotas">Votos</th></tr>
+                    <tr><td>🐶 Perros</td><td>12</td></tr>
+                    <tr><td>🐱 Gatos</td><td>8</td></tr>
+                    <tr><td>🦜 Pájaros</td><td>5</td></tr>
+                </table>
+            </div>
+
+            <div class="section tema-mascotas">
+                <h2>¡Construye la Gráfica de Mascotas! 🧱</h2>
+                <p>Usa los botones <strong>+</strong> y <strong>-</strong> para subir las barras según la tabla de arriba.</p>
+                <div class="chart-area">
+                    <div class="bar-group"><div class="bar" id="bar-perro">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-gato">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-pajaro">0</div></div>
+                </div>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div><div class="icon-label">🐶</div><div class="controls"><button class="btn-control" onclick="cambiarMascota('perro', 1)">+</button><button class="btn-control" onclick="cambiarMascota('perro', -1)">-</button></div></div>
+                    <div><div class="icon-label">🐱</div><div class="controls"><button class="btn-control" onclick="cambiarMascota('gato', 1)">+</button><button class="btn-control" onclick="cambiarMascota('gato', -1)">-</button></div></div>
+                    <div><div class="icon-label">🦜</div><div class="controls"><button class="btn-control" onclick="cambiarMascota('pajaro', 1)">+</button><button class="btn-control" onclick="cambiarMascota('pajaro', -1)">-</button></div></div>
+                </div>
+                <button class="btn-accion" style="background-color: #8e24aa;" onclick="verificarGraficaMascotas()">Verificar gráfica</button>
+                <div id="fb-graf-mascotas" class="feedback"></div>
+            </div>
+
+            <div class="section tema-mascotas">
+                <h2>Analiza las Mascotas 🧠</h2>
+                
+                <div class="diccionario">
+                    <strong>📖 Mini-Diccionario de Datos:</strong>
+                    <ul>
+                        <li><strong>La Moda:</strong> Es el dato que más se repite. ¡Es el ganador o el favorito de todos! (La barra más alta).</li>
+                        <li><strong>El Rango:</strong> Es la diferencia entre el grupo más grande y el más pequeño. Para calcularlo, al número mayor le restamos el número menor.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question"><strong>1. ¿Cuál es la Moda en las mascotas?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="moda_m" value="perro"> Los Perros (12 votos)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="moda_m" value="gato"> Los Gatos (8 votos)</label></div>
+                </div>
+                <div class="quiz-question"><strong>2. ¿Cuál es el Rango? (Resta el menor al mayor)</strong>
+                    <div class="quiz-option"><label><input type="radio" name="rango_m" value="7"> 7 (porque 12 - 5 = 7)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="rango_m" value="12"> 12 (porque es el número mayor)</label></div>
+                </div>
+                <div class="quiz-question"><strong>3. Si juntamos los perros y los pájaros, ¿cuántos animales son en total?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="suma_m" value="15"> 15 animales</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_m" value="17"> 17 animales</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_m" value="12"> 12 animales</label></div>
+                </div>
+                <button class="btn-accion" onclick="quizMascotas()">Revisar mis respuestas</button>
+                <div id="fb-quiz-mascotas" class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- ================= PÁGINA 3: LOS DULCES (AHORA ES LA MISIÓN 2) ================= -->
+        <div id="pagina3" class="page">
+            <div class="section tema-dulces">
+                <h2>Misión 2: La Fiesta de Dulces 🍬</h2>
+                <p>Se rompió una piñata. Cuenta los dulces desordenados y llena la tabla.</p>
+                
+                <div class="caja-dulces">
+                    <!-- 10 Caramelos -->
+                    <span class="dulce-suelto" style="top: 10%; left: 15%;">🍬</span> <span class="dulce-suelto" style="top: 40%; left: 80%;">🍬</span> <span class="dulce-suelto" style="top: 70%; left: 25%;">🍬</span> <span class="dulce-suelto" style="top: 20%; left: 50%;">🍬</span> <span class="dulce-suelto" style="top: 60%; left: 10%;">🍬</span> <span class="dulce-suelto" style="top: 80%; left: 60%;">🍬</span> <span class="dulce-suelto" style="top: 30%; left: 90%;">🍬</span> <span class="dulce-suelto" style="top: 15%; left: 70%;">🍬</span> <span class="dulce-suelto" style="top: 55%; left: 40%;">🍬</span> <span class="dulce-suelto" style="top: 85%; left: 85%;">🍬</span>
+                    <!-- 6 Chupetas -->
+                    <span class="dulce-suelto" style="top: 10%; left: 30%;">🍭</span> <span class="dulce-suelto" style="top: 50%; left: 60%;">🍭</span> <span class="dulce-suelto" style="top: 75%; left: 45%;">🍭</span> <span class="dulce-suelto" style="top: 25%; left: 10%;">🍭</span> <span class="dulce-suelto" style="top: 65%; left: 75%;">🍭</span> <span class="dulce-suelto" style="top: 35%; left: 35%;">🍭</span>
+                    <!-- 4 Chocolates -->
+                    <span class="dulce-suelto" style="top: 45%; left: 20%;">🍫</span> <span class="dulce-suelto" style="top: 15%; left: 85%;">🍫</span> <span class="dulce-suelto" style="top: 80%; left: 15%;">🍫</span> <span class="dulce-suelto" style="top: 25%; left: 65%;">🍫</span>
+                </div>
+
+                <table>
+                    <tr><th class="th-dulces">Tipo de Dulce</th><th class="th-dulces">Cantidad</th></tr>
+                    <tr><td>🍬 Caramelos</td><td><input type="number" id="input-caramelo" placeholder="0"></td></tr>
+                    <tr><td>🍭 Chupetas</td><td><input type="number" id="input-chupeta" placeholder="0"></td></tr>
+                    <tr><td>🍫 Chocolates</td><td><input type="number" id="input-chocolate" placeholder="0"></td></tr>
+                </table>
+                <button class="btn-accion" onclick="verificarConteo()">Verificar mi conteo</button>
+                <div id="fb-conteo" class="feedback"></div>
+            </div>
+
+            <div class="section tema-dulces">
+                <h2>¡Construye la Gráfica de Dulces! 🧱</h2>
+                <div class="chart-area">
+                    <div class="bar-group"><div class="bar" id="bar-caramelo">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-chupeta">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-chocolate">0</div></div>
+                </div>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div><div class="icon-label">🍬</div><div class="controls"><button class="btn-control" onclick="cambiarDulce('caramelo', 1)">+</button><button class="btn-control" onclick="cambiarDulce('caramelo', -1)">-</button></div></div>
+                    <div><div class="icon-label">🍭</div><div class="controls"><button class="btn-control" onclick="cambiarDulce('chupeta', 1)">+</button><button class="btn-control" onclick="cambiarDulce('chupeta', -1)">-</button></div></div>
+                    <div><div class="icon-label">🍫</div><div class="controls"><button class="btn-control" onclick="cambiarDulce('chocolate', 1)">+</button><button class="btn-control" onclick="cambiarDulce('chocolate', -1)">-</button></div></div>
+                </div>
+                <button class="btn-accion" style="background-color: #0288d1;" onclick="verificarGraficaDulces()">Verificar gráfica</button>
+                <div id="fb-graf-dulces" class="feedback"></div>
+            </div>
+            
+            <div class="section tema-dulces">
+                <h2>Analiza los Dulces 🧠</h2>
+
+                <div class="diccionario">
+                    <strong>📖 Recuerda:</strong>
+                    <ul>
+                        <li><strong>Moda:</strong> El que más se repite.</li>
+                        <li><strong>Rango:</strong> Al mayor le restas el menor.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question"><strong>1. ¿Cuál es la Moda?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="chocolate"> Chocolates</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="caramelo"> Caramelos</label></div>
+                </div>
+                <div class="quiz-question"><strong>2. ¿Cuál es el Rango?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="rango_d" value="6"> 6 (porque 10 - 4 = 6)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="rango_d" value="10"> 10</label></div>
+                </div>
+                <div class="quiz-question"><strong>3. Si te comes todas las chupetas y los chocolates, ¿cuántos dulces comiste en total?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="suma_d" value="8"> 8 dulces</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_d" value="14"> 14 dulces</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_d" value="10"> 10 dulces</label></div>
+                </div>
+                <button class="btn-accion" onclick="quizDulces()">Revisar mis respuestas</button>
+                <div id="fb-quiz-dulces" class="feedback"></div>
+            </div>
+        </div>
+
+        <!-- ================= CONTROLES DE NAVEGACIÓN ================= -->
+        <div class="nav-buttons">
+            <button class="btn-nav" id="btn-prev" onclick="cambiarPagina(-1)" disabled>⬅️ Anterior</button>
+            <div class="page-indicator" id="indicador-pagina">Página 1 de 3</div>
+            <button class="btn-nav" id="btn-next" onclick="cambiarPagina(1)">Siguiente ➡️</button>
+        </div>
+    </div>
+
+    <!-- CÓDIGO JAVASCRIPT -->
+    <script>
+        // === LOGICA DE NAVEGACIÓN ===
+        let paginaActual = 1;
+        const totalPaginas = 3;
+
+        function cambiarPagina(direccion) {
+            document.getElementById(`pagina${paginaActual}`).classList.remove('active');
+            paginaActual += direccion;
+            document.getElementById(`pagina${paginaActual}`).classList.add('active');
+            
+            document.getElementById('indicador-pagina').innerText = `Página ${paginaActual} de ${totalPaginas}`;
+            document.getElementById('btn-prev').disabled = (paginaActual === 1);
+            document.getElementById('btn-next').disabled = (paginaActual === totalPaginas);
+        }
+
+        // === LOGICA: MASCOTAS ===
+        const corrMascotas = { perro: 12, gato: 8, pajaro: 5 };
+        let valMascotas = { perro: 0, gato: 0, pajaro: 0 };
+
+        function cambiarMascota(tipo, cant) {
+            let n = valMascotas[tipo] + cant;
+            if(n >= 0 && n <= 15) {
+                valMascotas[tipo] = n;
+                let b = document.getElementById('bar-' + tipo);
+                b.style.height = (n * 20) + 'px';
+                b.innerText = n > 0 ? n : '0';
+            }
+        }
+
+        function verificarGraficaMascotas() {
+            let fb = document.getElementById('fb-graf-mascotas');
+            if(valMascotas.perro === corrMascotas.perro && valMascotas.gato === corrMascotas.gato && valMascotas.pajaro === corrMascotas.pajaro) {
+                fb.className = "feedback correct"; fb.innerHTML = "🌟 ¡PERFECTO! Gráfica construida correctamente.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Ajusta las barras según la tabla de mascotas.";
+            }
+        }
+
+        function quizMascotas() {
+            let p1 = document.querySelector('input[name="moda_m"]:checked');
+            let p2 = document.querySelector('input[name="rango_m"]:checked');
+            let p3 = document.querySelector('input[name="suma_m"]:checked');
+            let fb = document.getElementById('fb-quiz-mascotas');
+            
+            if(!p1 || !p2 || !p3) { fb.className = "feedback incorrect"; fb.innerHTML = "⚠️ Responde las TRES preguntas."; return; }
+            
+            let puntaje = 0;
+            if(p1.value === "perro") puntaje++;
+            if(p2.value === "7") puntaje++;
+            if(p3.value === "17") puntaje++; // 12 perros + 5 pájaros
+
+            if(puntaje === 3) {
+                fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Excelente! Acertaste todo: Moda, Rango y la Suma.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = `🤔 Tuviste ${puntaje} correctas de 3. Revisa de nuevo los datos e inténtalo otra vez.`;
+            }
+        }
+
+        // === LOGICA: DULCES ===
+        const corrDulces = { caramelo: 10, chupeta: 6, chocolate: 4 };
+        let valDulces = { caramelo: 0, chupeta: 0, chocolate: 0 };
+
+        function verificarConteo() {
+            let c = parseInt(document.getElementById('input-caramelo').value) || 0;
+            let ch = parseInt(document.getElementById('input-chupeta').value) || 0;
+            let cho = parseInt(document.getElementById('input-chocolate').value) || 0;
+            let fb = document.getElementById('fb-conteo');
+            if(c === corrDulces.caramelo && ch === corrDulces.chupeta && cho === corrDulces.chocolate) {
+                fb.className = "feedback correct"; fb.innerHTML = "✅ ¡Excelente conteo!";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Revisa bien. Pista: Hay 10 caramelos.";
+            }
+        }
+
+        function cambiarDulce(tipo, cant) {
+            let n = valDulces[tipo] + cant;
+            if(n >= 0 && n <= 15) {
+                valDulces[tipo] = n;
+                let b = document.getElementById('bar-' + tipo);
+                b.style.height = (n * 20) + 'px';
+                b.innerText = n > 0 ? n : '0';
+            }
+        }
+
+        function verificarGraficaDulces() {
+            let fb = document.getElementById('fb-graf-dulces');
+            if(valDulces.caramelo === corrDulces.caramelo && valDulces.chupeta === corrDulces.chupeta && valDulces.chocolate === corrDulces.chocolate) {
+                fb.className = "feedback correct"; fb.innerHTML = "🌟 ¡PERFECTO! Las barras coinciden con la tabla.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Ajusta las barras. Mira los datos de la tabla.";
+            }
+        }
+
+        function quizDulces() {
+            let p1 = document.querySelector('input[name="moda_d"]:checked');
+            let p2 = document.querySelector('input[name="rango_d"]:checked');
+            let p3 = document.querySelector('input[name="suma_d"]:checked');
+            let fb = document.getElementById('fb-quiz-dulces');
+            
+            if(!p1 || !p2 || !p3) { fb.className = "feedback incorrect"; fb.innerHTML = "⚠️ Responde las TRES preguntas."; return; }
+            
+            let puntaje = 0;
+            if(p1.value === "caramelo") puntaje++;
+            if(p2.value === "6") puntaje++;
+            if(p3.value === "10") puntaje++; // 6 chupetas + 4 chocolates
+
+            if(puntaje === 3) {
+                fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Felicidades! Lograste analizar todos los datos perfectamente.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = `🤔 Tuviste ${puntaje} correctas de 3. Vuelve a revisar la tabla y el diccionario.`;
+            }
+        }
+    </script>
+</body>
+</html>
