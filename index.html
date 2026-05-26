@@ -168,11 +168,11 @@
                     </ul>
                 </div>
 
-                <div class="quiz-question"><strong>1. ¿Cuál es la Moda en las mascotas?</strong>
+                <div class="quiz-question"><strong>1. ¿Cuál es el número que más se repite?</strong>
                     <div class="quiz-option"><label><input type="radio" name="moda_m" value="perro"> Los Perros (12 votos)</label></div>
                     <div class="quiz-option"><label><input type="radio" name="moda_m" value="gato"> Los Gatos (8 votos)</label></div>
                 </div>
-                <div class="quiz-question"><strong>2. ¿Cuál es el Rango? (Resta el menor al mayor)</strong>
+                <div class="quiz-question"><strong>2. ¿Cuál es el resultado de restar el mayor y el menor de los datos?</strong>
                     <div class="quiz-option"><label><input type="radio" name="rango_m" value="7"> 7 (porque 12 - 5 = 7)</label></div>
                     <div class="quiz-option"><label><input type="radio" name="rango_m" value="12"> 12 (porque es el número mayor)</label></div>
                 </div>
@@ -238,11 +238,11 @@
                     </ul>
                 </div>
 
-                <div class="quiz-question"><strong>1. ¿Cuál es la Moda?</strong>
+                <div class="quiz-question"><strong>1. ¿Cuál es el número que más se repite?</strong>
                     <div class="quiz-option"><label><input type="radio" name="moda_d" value="chocolate"> Chocolates</label></div>
                     <div class="quiz-option"><label><input type="radio" name="moda_d" value="caramelo"> Caramelos</label></div>
                 </div>
-                <div class="quiz-question"><strong>2. ¿Cuál es el Rango?</strong>
+                <div class="quiz-question"><strong>2. ¿Cuál es el resultado de restar el mayor y el menor de los datos?</strong>
                     <div class="quiz-option"><label><input type="radio" name="rango_d" value="6"> 6 (porque 10 - 4 = 6)</label></div>
                     <div class="quiz-option"><label><input type="radio" name="rango_d" value="10"> 10</label></div>
                 </div>
@@ -317,7 +317,7 @@
             if(p3.value === "17") puntaje++; // 12 perros + 5 pájaros
 
             if(puntaje === 3) {
-                fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Excelente! Acertaste todo: Moda, Rango y la Suma.";
+                fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Excelente! Acertaste todo: el número que más se repite, la resta del mayor y el menor, y la suma.";
             } else {
                 fb.className = "feedback incorrect"; fb.innerHTML = `🤔 Tuviste ${puntaje} correctas de 3. Revisa de nuevo los datos e inténtalo otra vez.`;
             }
