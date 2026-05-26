@@ -40,6 +40,9 @@
         .tema-mascotas { border: 3px solid #ce93d8; background-color: #f3e5f5; }
         .tema-mascotas h2 { color: #6a1b9a; border-color: #ab47bc; }
 
+        .tema-juegos { border: 3px solid #a5d6a7; background-color: #e8f5e9; }
+        .tema-juegos h2 { color: #2e7d32; border-color: #66bb6a; }
+
         /* Diccionario de conceptos */
         .diccionario {
             background-color: #fff9c4;
@@ -77,7 +80,8 @@
         th, td { border: 2px solid #bbb; padding: 10px; }
         .th-dulces { background-color: #b3e5fc; color: #01579b; }
         .th-mascotas { background-color: #e1bee7; color: #4a148c; }
-        input[type="number"] { width: 60px; padding: 8px; font-size: 1.1em; border: 2px solid #00bcd4; border-radius: 8px; text-align: center; }
+        .th-juegos { background-color: #c8e6c9; color: #1b5e20; }
+        input[type="number"] { width: 70px; padding: 8px; font-size: 1.1em; border: 2px solid #00bcd4; border-radius: 8px; text-align: center; }
 
         /* Constructor de Gráfica */
         .chart-area {
@@ -92,10 +96,17 @@
         }
 
         /* Colores Barras */
-        #bar-caramelo { background-color: #ec407a; } #bar-chupeta { background-color: #ab47bc; } #bar-chocolate { background-color: #8d6e63; }
-        #bar-perro { background-color: #42a5f5; } #bar-gato { background-color: #ff9800; } #bar-pajaro { background-color: #66bb6a; }
+        #bar-caramelo { background-color: #ec407a; } 
+        #bar-chupeta { background-color: #ab47bc; } 
+        #bar-chocolate { background-color: #8d6e63; }
+        #bar-perro { background-color: #42a5f5; } 
+        #bar-gato { background-color: #ff9800; } 
+        #bar-pajaro { background-color: #66bb6a; }
+        #bar-futbol { background-color: #ef5350; }
+        #bar-videojuego { background-color: #26a69a; }
+        #bar-ajedrez { background-color: #ffa726; }
 
-        .controls { margin-top: 10px; display: flex; gap: 5px; }
+        .controls { margin-top: 10px; display: flex; gap: 5px; justify-content: center; }
         .btn-control { width: 35px; height: 35px; font-size: 1.5em; font-weight: bold; background-color: #eeeeee; border: 2px solid #ccc; border-radius: 5px; cursor: pointer; }
         .btn-control:hover { background-color: #e0e0e0; }
         .icon-label { font-size: 1.5em; margin-top: 5px; }
@@ -121,22 +132,22 @@
         <div id="pagina1" class="page active">
             <div class="section" style="text-align: center; background-color: #fff9c4; border: 3px solid #fbc02d;">
                 <h2 style="color: #f57f17; border-bottom: none;">¡Bienvenido, Científico de Datos!</h2>
-                <p style="font-size: 1.3em;">Hoy vamos a completar dos misiones muy importantes para aprender a recolectar datos, organizarlos en tablas y dibujar gráficas de barras.</p>
-                <div style="font-size: 4em; margin: 20px 0;">🎒 🐶 🍬</div>
+                <p style="font-size: 1.3em;">Hoy vamos a completar tres misiones muy importantes para aprender a recolectar datos, organizarlos en tablas y dibujar gráficas de barras.</p>
+                <div style="font-size: 4em; margin: 20px 0;">🎒 🐶 🍬 ⚽</div>
                 <p style="font-size: 1.2em;">Haz clic en <strong>"Siguiente"</strong> para comenzar tu primera misión.</p>
             </div>
         </div>
 
-        <!-- ================= PÁGINA 2: LAS MASCOTAS (AHORA ES LA MISIÓN 1) ================= -->
+        <!-- ================= PÁGINA 2: LAS MASCOTAS (MISIÓN 1) ================= -->
         <div id="pagina2" class="page">
             <div class="section tema-mascotas">
                 <h2>Misión 1: Mascotas Favoritas 🐾</h2>
                 <p>Aquí ya te damos los datos recolectados en la encuesta del salón. Obsérvalos bien:</p>
                 <table>
                     <tr><th class="th-mascotas">Mascota</th><th class="th-mascotas">Votos</th></tr>
-                    <tr><td>🐶 Perros</td><td>12</td></tr>
-                    <tr><td>🐱 Gatos</td><td>8</td></tr>
-                    <tr><td>🦜 Pájaros</td><td>5</td></tr>
+                    <tr><td>🐶 Perros</td><td><strong>12</strong></td></tr>
+                    <tr><td>🐱 Gatos</td><td><strong>8</strong></td></tr>
+                    <tr><td>🦜 Pájaros</td><td><strong>5</strong></td></tr>
                 </table>
             </div>
 
@@ -186,7 +197,7 @@
             </div>
         </div>
 
-        <!-- ================= PÁGINA 3: LOS DULCES (AHORA ES LA MISIÓN 2) ================= -->
+        <!-- ================= PÁGINA 3: LOS DULCES (MISIÓN 2) ================= -->
         <div id="pagina3" class="page">
             <div class="section tema-dulces">
                 <h2>Misión 2: La Fiesta de Dulces 🍬</h2>
@@ -229,7 +240,6 @@
             
             <div class="section tema-dulces">
                 <h2>Analiza los Dulces 🧠</h2>
-
                 <div class="diccionario">
                     <strong>📖 Recuerda:</strong>
                     <ul>
@@ -239,8 +249,8 @@
                 </div>
 
                 <div class="quiz-question"><strong>1. ¿Cuál es el número que más se repite?</strong>
-                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="chocolate"> Chocolates</label></div>
-                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="caramelo"> Caramelos</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="caramelo"> Caramelos (10)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="moda_d" value="chupeta"> Chupetas (6)</label></div>
                 </div>
                 <div class="quiz-question"><strong>2. ¿Cuál es el resultado de restar el mayor y el menor de los datos?</strong>
                     <div class="quiz-option"><label><input type="radio" name="rango_d" value="6"> 6 (porque 10 - 4 = 6)</label></div>
@@ -256,10 +266,80 @@
             </div>
         </div>
 
+        <!-- ================= PÁGINA 4: JUEGOS FAVORITOS (MISIÓN 3) ================= -->
+        <div id="pagina4" class="page">
+            <div class="section tema-juegos">
+                <h2>Misión 3: Juegos Favoritos 🎮</h2>
+                <p>Observa los datos de la encuesta y escribe los números en la tabla. ¡Tú puedes!</p>
+                
+                <!-- Datos de la encuesta visualmente -->
+                <div style="background-color: #fff3e0; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center;">
+                    <p><strong>📋 Resultados de la encuesta:</strong></p>
+                    <p>⚽ Fútbol: <strong style="font-size: 1.5em;">15</strong> votos</p>
+                    <p>🎮 Videojuegos: <strong style="font-size: 1.5em;">10</strong> votos</p>
+                    <p>♟️ Ajedrez: <strong style="font-size: 1.5em;">7</strong> votos</p>
+                </div>
+
+                <table>
+                    <tr><th class="th-juegos">Juego</th><th class="th-juegos">Cantidad</th></tr>
+                    <tr><td>⚽ Fútbol</td><td><input type="number" id="input-futbol" placeholder="0"></td></tr>
+                    <tr><td>🎮 Videojuegos</td><td><input type="number" id="input-videojuego" placeholder="0"></td></tr>
+                    <tr><td>♟️ Ajedrez</td><td><input type="number" id="input-ajedrez" placeholder="0"></td></tr>
+                </table>
+                <button class="btn-accion" onclick="verificarConteoJuegos()">Verificar mi conteo</button>
+                <div id="fb-conteo-juegos" class="feedback"></div>
+            </div>
+
+            <div class="section tema-juegos">
+                <h2>¡Construye la Gráfica de Juegos! 🧱</h2>
+                <p>Usa los botones <strong>+</strong> y <strong>-</strong> para subir las barras según los números que escribiste en la tabla.</p>
+                <div class="chart-area">
+                    <div class="bar-group"><div class="bar" id="bar-futbol">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-videojuego">0</div></div>
+                    <div class="bar-group"><div class="bar" id="bar-ajedrez">0</div></div>
+                </div>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div><div class="icon-label">⚽</div><div class="controls"><button class="btn-control" onclick="cambiarJuego('futbol', 1)">+</button><button class="btn-control" onclick="cambiarJuego('futbol', -1)">-</button></div></div>
+                    <div><div class="icon-label">🎮</div><div class="controls"><button class="btn-control" onclick="cambiarJuego('videojuego', 1)">+</button><button class="btn-control" onclick="cambiarJuego('videojuego', -1)">-</button></div></div>
+                    <div><div class="icon-label">♟️</div><div class="controls"><button class="btn-control" onclick="cambiarJuego('ajedrez', 1)">+</button><button class="btn-control" onclick="cambiarJuego('ajedrez', -1)">-</button></div></div>
+                </div>
+                <button class="btn-accion" style="background-color: #2e7d32;" onclick="verificarGraficaJuegos()">Verificar gráfica</button>
+                <div id="fb-graf-juegos" class="feedback"></div>
+            </div>
+
+            <div class="section tema-juegos">
+                <h2>Analiza los Juegos 🧠</h2>
+
+                <div class="diccionario">
+                    <strong>📖 Mini-Diccionario de Datos:</strong>
+                    <ul>
+                        <li><strong>La Moda:</strong> Es el dato que más se repite. ¡Es el ganador o el favorito de todos! (La barra más alta).</li>
+                        <li><strong>El Rango:</strong> Es la diferencia entre el grupo más grande y el más pequeño. Para calcularlo, al número mayor le restamos el número menor.</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question"><strong>1. ¿Cuál es el número que más se repite?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="moda_j" value="futbol"> El Fútbol (15 votos)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="moda_j" value="videojuego"> Los Videojuegos (10 votos)</label></div>
+                </div>
+                <div class="quiz-question"><strong>2. ¿Cuál es el resultado de restar el mayor y el menor de los datos?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="rango_j" value="8"> 8 (porque 15 - 7 = 8)</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="rango_j" value="15"> 15 (porque es el número mayor)</label></div>
+                </div>
+                <div class="quiz-question"><strong>3. Si juntamos los que prefieren Fútbol y Ajedrez, ¿cuántos estudiantes son en total?</strong>
+                    <div class="quiz-option"><label><input type="radio" name="suma_j" value="22"> 22 estudiantes</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_j" value="25"> 25 estudiantes</label></div>
+                    <div class="quiz-option"><label><input type="radio" name="suma_j" value="17"> 17 estudiantes</label></div>
+                </div>
+                <button class="btn-accion" onclick="quizJuegos()">Revisar mis respuestas</button>
+                <div id="fb-quiz-juegos" class="feedback"></div>
+            </div>
+        </div>
+
         <!-- ================= CONTROLES DE NAVEGACIÓN ================= -->
         <div class="nav-buttons">
             <button class="btn-nav" id="btn-prev" onclick="cambiarPagina(-1)" disabled>⬅️ Anterior</button>
-            <div class="page-indicator" id="indicador-pagina">Página 1 de 3</div>
+            <div class="page-indicator" id="indicador-pagina">Página 1 de 4</div>
             <button class="btn-nav" id="btn-next" onclick="cambiarPagina(1)">Siguiente ➡️</button>
         </div>
     </div>
@@ -268,7 +348,7 @@
     <script>
         // === LOGICA DE NAVEGACIÓN ===
         let paginaActual = 1;
-        const totalPaginas = 3;
+        const totalPaginas = 4;
 
         function cambiarPagina(direccion) {
             document.getElementById(`pagina${paginaActual}`).classList.remove('active');
@@ -286,7 +366,7 @@
 
         function cambiarMascota(tipo, cant) {
             let n = valMascotas[tipo] + cant;
-            if(n >= 0 && n <= 15) {
+            if(n >= 0 && n <= 20) {
                 valMascotas[tipo] = n;
                 let b = document.getElementById('bar-' + tipo);
                 b.style.height = (n * 20) + 'px';
@@ -314,7 +394,7 @@
             let puntaje = 0;
             if(p1.value === "perro") puntaje++;
             if(p2.value === "7") puntaje++;
-            if(p3.value === "17") puntaje++; // 12 perros + 5 pájaros
+            if(p3.value === "17") puntaje++;
 
             if(puntaje === 3) {
                 fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Excelente! Acertaste todo: el número que más se repite, la resta del mayor y el menor, y la suma.";
@@ -335,13 +415,13 @@
             if(c === corrDulces.caramelo && ch === corrDulces.chupeta && cho === corrDulces.chocolate) {
                 fb.className = "feedback correct"; fb.innerHTML = "✅ ¡Excelente conteo!";
             } else {
-                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Revisa bien. Pista: Hay 10 caramelos.";
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Revisa bien. Pista: Hay 10 caramelos, 6 chupetas y 4 chocolates.";
             }
         }
 
         function cambiarDulce(tipo, cant) {
             let n = valDulces[tipo] + cant;
-            if(n >= 0 && n <= 15) {
+            if(n >= 0 && n <= 20) {
                 valDulces[tipo] = n;
                 let b = document.getElementById('bar-' + tipo);
                 b.style.height = (n * 20) + 'px';
@@ -369,12 +449,67 @@
             let puntaje = 0;
             if(p1.value === "caramelo") puntaje++;
             if(p2.value === "6") puntaje++;
-            if(p3.value === "10") puntaje++; // 6 chupetas + 4 chocolates
+            if(p3.value === "10") puntaje++;
 
             if(puntaje === 3) {
                 fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Felicidades! Lograste analizar todos los datos perfectamente.";
             } else {
                 fb.className = "feedback incorrect"; fb.innerHTML = `🤔 Tuviste ${puntaje} correctas de 3. Vuelve a revisar la tabla y el diccionario.`;
+            }
+        }
+
+        // === LOGICA: JUEGOS ===
+        const corrJuegos = { futbol: 15, videojuego: 10, ajedrez: 7 };
+        let valJuegos = { futbol: 0, videojuego: 0, ajedrez: 0 };
+
+        function verificarConteoJuegos() {
+            let f = parseInt(document.getElementById('input-futbol').value) || 0;
+            let v = parseInt(document.getElementById('input-videojuego').value) || 0;
+            let a = parseInt(document.getElementById('input-ajedrez').value) || 0;
+            let fb = document.getElementById('fb-conteo-juegos');
+            if(f === corrJuegos.futbol && v === corrJuegos.videojuego && a === corrJuegos.ajedrez) {
+                fb.className = "feedback correct"; fb.innerHTML = "✅ ¡Excelente! Has escrito los números correctamente.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Revisa los datos de la encuesta. Mira los números grandes que te mostramos.";
+            }
+        }
+
+        function cambiarJuego(tipo, cant) {
+            let n = valJuegos[tipo] + cant;
+            if(n >= 0 && n <= 20) {
+                valJuegos[tipo] = n;
+                let b = document.getElementById('bar-' + tipo);
+                b.style.height = (n * 20) + 'px';
+                b.innerText = n > 0 ? n : '0';
+            }
+        }
+
+        function verificarGraficaJuegos() {
+            let fb = document.getElementById('fb-graf-juegos');
+            if(valJuegos.futbol === corrJuegos.futbol && valJuegos.videojuego === corrJuegos.videojuego && valJuegos.ajedrez === corrJuegos.ajedrez) {
+                fb.className = "feedback correct"; fb.innerHTML = "🌟 ¡PERFECTO! Gráfica de juegos construida correctamente.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = "❌ Ajusta las barras según los números que escribiste en la tabla de juegos.";
+            }
+        }
+
+        function quizJuegos() {
+            let p1 = document.querySelector('input[name="moda_j"]:checked');
+            let p2 = document.querySelector('input[name="rango_j"]:checked');
+            let p3 = document.querySelector('input[name="suma_j"]:checked');
+            let fb = document.getElementById('fb-quiz-juegos');
+            
+            if(!p1 || !p2 || !p3) { fb.className = "feedback incorrect"; fb.innerHTML = "⚠️ Responde las TRES preguntas."; return; }
+            
+            let puntaje = 0;
+            if(p1.value === "futbol") puntaje++;
+            if(p2.value === "8") puntaje++;
+            if(p3.value === "22") puntaje++;
+
+            if(puntaje === 3) {
+                fb.className = "feedback correct"; fb.innerHTML = "🏆 ¡Excelente! Analizaste perfectamente los datos de los juegos favoritos.";
+            } else {
+                fb.className = "feedback incorrect"; fb.innerHTML = `🤔 Tuviste ${puntaje} correctas de 3. Revisa la encuesta de juegos y vuelve a intentarlo.`;
             }
         }
     </script>
